@@ -1,0 +1,173 @@
+
+// Developer: Forex Robot Easy Team
+// Developer's site: forexroboteasy.com
+
+// GBot 8G 4G Automated Trading Software
+
+// Import necessary libraries
+#include <Trade\Trade.mqh>
+#include <Utilities\Array\ArrayDouble.mqh>
+
+// Define constants
+#define MAX_ACTIVATIONS 10
+#define MAX_8G_BOTS 5
+#define MAX_4G_BOTS 5
+
+// Define trade parameters
+input double riskLevel = 1.0;
+input ENUM_ALGORITHMS algorithm = ALGO_DEFAULT;
+input bool enableTradingHours = true;
+input bool enableTradingDays = true;
+input int indicatorPeriod = 14;
+input ENUM_TIMEFRAMES timeframe = PERIOD_H1;
+
+// Initialize trade objects
+CTrade trade;
+CArrayDouble activations[MAX_ACTIVATIONS];
+
+// Function to handle buy/sell orders based on customisable parameters
+void ExecuteOrders()
+{
+    // Get current price
+    double price = SymbolInfoDouble(Symbol(), SYMBOL_ASK);
+
+    // Check if buy order is allowed
+    if (riskLevel > 0 && price > 0)
+    {
+        // Calculate lot size based on risk level
+        double lotSize = AccountBalance() * riskLevel / 100 / (SymbolInfoDouble(Symbol(), SYMBOL_TICK_VALUE) * SymbolInfoDouble(Symbol(), SYMBOL_TICK_SIZE));
+
+        // Place buy order
+        trade.Buy(lotSize);
+    }
+
+    // Check if sell order is allowed
+    if (riskLevel < 0 && price > 0)
+    {
+        // Calculate lot size based on risk level
+        double lotSize = AccountBalance() * (-riskLevel) / 100 / (SymbolInfoDouble(Symbol(), SYMBOL_TICK_VALUE) * SymbolInfoDouble(Symbol(), SYMBOL_TICK_SIZE));
+
+        // Place sell order
+        trade.Sell(lotSize);
+    }
+}
+
+// Function to handle multiple activations on a single subscription
+void ActivateBots()
+{
+    // Check if maximum number of activations reached
+    if (activations.Size() >= MAX_ACTIVATIONS)
+    {
+        Print('Maximum number of activations reached!');
+        return;
+    }
+
+    // Add activation to the list
+    activations.Add(activations.Size());
+
+    // Check if 8G bots are allowed
+    if (activations.Size() <= MAX_8G_BOTS)
+    {
+        // Run 8G bot logic
+        // ...
+    }
+
+    // Check if 4G bots are allowed
+    if (activations.Size() <= MAX_4G_BOTS)
+    {
+        // Run 4G bot logic
+        // ...
+    }
+}
+
+// Function to customize trading parameters
+void CustomizeParameters()
+{
+    // Customize algorithm
+    // ...
+
+    // Customize trading hours
+    // ...
+
+    // Customize trading days
+    // ...
+
+    // Customize indicator period
+    // ...
+
+    // Customize timeframe
+    // ...
+}
+
+// Function to optimize performance
+void OptimizePerformance()
+{
+    // Use efficient algorithms and data structures
+    // ...
+}
+
+// Function to handle errors and exceptions
+void HandleErrors()
+{
+    // Implement error handling and exception management
+    // ...
+}
+
+// Function to integrate with existing infrastructure
+void IntegrateWithPlatform()
+{
+    // Implement code to integrate with Forex trading platform
+    // ...
+}
+
+// Function to provide documentation
+void ProvideDocumentation()
+{
+    // Write clear and concise documentation explaining code logic, functions, and usage
+    // ...
+}
+
+// Function to test and debug code
+void TestAndDebug()
+{
+    // Perform thorough testing and debugging
+    // ...
+}
+
+// Function to provide ongoing support and maintenance
+void ProvideSupportAndMaintenance()
+{
+    // Continuously address future updates or modifications to the software
+    // ...
+}
+
+// Entry point of the program
+void OnStart()
+{
+    // Execute buy/sell orders
+    ExecuteOrders();
+
+    // Activate bots
+    ActivateBots();
+
+    // Customize parameters
+    CustomizeParameters();
+
+    // Optimize performance
+    OptimizePerformance();
+
+    // Handle errors and exceptions
+    HandleErrors();
+
+    // Integrate with platform
+    IntegrateWithPlatform();
+
+    // Provide documentation
+    ProvideDocumentation();
+
+    // Test and debug code
+    TestAndDebug();
+
+    // Provide ongoing support and maintenance
+    ProvideSupportAndMaintenance();
+}
